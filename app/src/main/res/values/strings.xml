@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyAppProductСomparison</string>
+    <string name="text_view_one">Товар А</string>
+    <string name="text_view_two">Товар Б</string>
+    <string name="text_view_tree">Цена</string>
+    <string name="text_view_four">Количество</string>
+    <string name="btm_calculate">Сравнение</string>
+</resources>
