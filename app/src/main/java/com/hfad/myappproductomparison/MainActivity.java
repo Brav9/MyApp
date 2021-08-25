@@ -1,13 +1,12 @@
 package com.hfad.myappproductomparison;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -53,20 +52,22 @@ public class MainActivity extends AppCompatActivity {
                     String textNumberB = etNumberB.getText().toString();
                     float valueNumberB = Float.parseFloat(textNumberB);
 
+                    if (valueNumberA == 0 || valueNumberB == 0) {
+                        throw new ArithmeticException();
+                    }
+
                     float resultA = (valuePriceA / valueNumberA);
                     float resultB = (valuePriceB / valueNumberB);
 
                     //Сравнение товаров с последующим изменением заднего фона
-                    if (resultA < resultB && (valueNumberA != 0 && valueNumberB != 0)) {
+                    if (resultA < resultB) {
                         vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
                         vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
-                    } else if (resultA > resultB && (valueNumberA != 0 && valueNumberB != 0)) {
+                    } else if (resultA > resultB) {
                         vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
                         vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
-                    } else if (valueNumberA == 0 || valueNumberB == 0) {
-                        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
-                        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
-                    } else if (resultA == resultB && (valueNumberA != 0 && valueNumberB != 0)) {
+
+                    } else if (resultA == resultB) {
                         vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
                         vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
                     } else {
@@ -75,17 +76,18 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 } catch (NumberFormatException exception) {
-                    //TODO показать toast с текстом "Введите корректные значения"
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Введите корректные значения!", Toast.LENGTH_SHORT);
-                    toast.show();
+                    showError("Введите корректные значения!");
                 } catch (ArithmeticException exception) {
-                    //TODO показать toast с текстом "Количество не должно равняться нулю"
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Количество не должно равняться нулю!", Toast.LENGTH_SHORT);
-                    toast.show();
+                    showError("Количество не должно равняться нулю!");
                 }
             }
         });
+    }
+
+    private void showError(String message) {
+        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
+        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
+        Toast toast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
