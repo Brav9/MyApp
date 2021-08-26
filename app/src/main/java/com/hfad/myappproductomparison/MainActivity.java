@@ -1,8 +1,9 @@
 package com.hfad.myappproductomparison;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,7 +15,9 @@ public class MainActivity extends AppCompatActivity {
     EditText etPriceB;
     EditText etNumberA;
     EditText etNumberB;
-    Button btnCalculate;
+    EditText etCalculateA;
+    EditText etCalculateB;
+    //Button btnCalculate;
     View vBackgroundA;
     View vBackgroundB;
     float textNumberA = 0;
@@ -31,13 +34,53 @@ public class MainActivity extends AppCompatActivity {
         etPriceB = findViewById(R.id.editTextPriceB);
         etNumberA = findViewById(R.id.etQuantityA);
         etNumberB = findViewById(R.id.etQuantityB);
-        btnCalculate = findViewById(R.id.btnCalculate);
+        //btnCalculate = findViewById(R.id.btnCalculate);
         vBackgroundA = findViewById(R.id.vBackgroundA);
         vBackgroundB = findViewById(R.id.vBackgroundB);
+        etCalculateA = findViewById(R.id.etCalculateA);
+        etCalculateB = findViewById(R.id.etCalculateB);
 
         //Добавить отображение результата расчета по каждому товару ниже.
         //Авторасчет - убрать кнопку "Расчитать". ВМесто этого повесить на поля ввода слушатели^
         //онТекстЧенд;еЛистенер. При изменении текста ну;но менять переменну.? в которотой [раниться значение]
+
+        etCalculateA.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etCalculateB.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+
 
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //функция Калькул'те'() { }
-    public static class Calculator {
-
+    public static class Calculate {
     }
 
 

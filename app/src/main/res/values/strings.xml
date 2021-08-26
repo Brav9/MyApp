@@ -5,4 +5,5 @@
     <string name="text_view_tree">Цена</string>
     <string name="text_view_four">Количество</string>
     <string name="btm_calculate">Сравнение</string>
+    <string name="text_view_five">Результат</string>
 </resources>
