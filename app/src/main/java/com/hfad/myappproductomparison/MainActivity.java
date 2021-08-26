@@ -8,19 +8,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class MainActivity extends AppCompatActivity {
 
-
-
-    EditText etPriceA; // переименовать в етПрайсА
+    EditText etPriceA;
     EditText etPriceB;
     EditText etNumberA;
     EditText etNumberB;
     Button btnCalculate;
     View vBackgroundA;
     View vBackgroundB;
-
+    float textNumberA = 0;
+    float textNumberB = 0;
+    float valuePriceA = 0;
+    float getValuePriceB = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         btnCalculate = findViewById(R.id.btnCalculate);
         vBackgroundA = findViewById(R.id.vBackgroundA);
         vBackgroundB = findViewById(R.id.vBackgroundB);
+
+        //Добавить отображение результата расчета по каждому товару ниже.
+        //Авторасчет - убрать кнопку "Расчитать". ВМесто этого повесить на поля ввода слушатели^
+        //онТекстЧенд;еЛистенер. При изменении текста ну;но менять переменну.? в которотой [раниться значение]
 
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //функция Калькул'те'() { }
+    public static class Calculator {
+
+    }
+
+
 
     private void showError(String message) {
         vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
