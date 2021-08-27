@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +21,22 @@ public class MainActivity extends AppCompatActivity {
     //Button btnCalculate;
     View vBackgroundA;
     View vBackgroundB;
-    float textNumberA = 0;
-    float textNumberB = 0;
-    float valuePriceA = 0;
-    float getValuePriceB = 0;
+    //float textNumberA;
+    //float textNumberB;
+    float valuePriceA;
+    float valuePriceB;
+    float resultA;
+    float resultB;
+    TextWatcher textWatcher;
+    String textPriceA;
+    String textNumberA;
+    float valueNumberA;
+    String textPriceB;
+    String textNumberB;
+    float valueNumberB;
+    TextView tvCalculateA;
+    TextView tvCalculateB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,110 +50,93 @@ public class MainActivity extends AppCompatActivity {
         //btnCalculate = findViewById(R.id.btnCalculate);
         vBackgroundA = findViewById(R.id.vBackgroundA);
         vBackgroundB = findViewById(R.id.vBackgroundB);
-        etCalculateA = findViewById(R.id.etCalculateA);
-        etCalculateB = findViewById(R.id.etCalculateB);
+        tvCalculateA = findViewById(R.id.tvCalculateA);
+        tvCalculateB = findViewById(R.id.tvCalculateB);
+
+        etPriceA.addTextChangedListener(new CustomTextWatcher());
+        etPriceB.addTextChangedListener(new CustomTextWatcher());
+        etNumberA.addTextChangedListener(new CustomTextWatcher());
+        etNumberB.addTextChangedListener(new CustomTextWatcher());
 
         //Добавить отображение результата расчета по каждому товару ниже.
         //Авторасчет - убрать кнопку "Расчитать". ВМесто этого повесить на поля ввода слушатели^
         //онТекстЧенд;еЛистенер. При изменении текста ну;но менять переменну.? в которотой [раниться значение]
+    }
 
-        etCalculateA.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    public class CustomTextWatcher implements TextWatcher {
 
-            }
+        private boolean mWasEdited = false;
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+        }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
-        });
+            try {
+                if (!etPriceA.getText().toString().equals("") && !etNumberA.getText().toString().equals("")) {
+                    textPriceA = etPriceA.getText().toString();
+                    valuePriceA = Float.parseFloat(textPriceA);
+                    textNumberA = etNumberA.getText().toString();
+                    valueNumberA = Float.parseFloat(textNumberA);
+                    tvCalculateA.setText(String.valueOf(valuePriceA / valueNumberA));
 
-        etCalculateB.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-
-
-
-        btnCalculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                try {
-                    String textPriceA = etPriceA.getText().toString();
-                    float valuePriceA = Float.parseFloat(textPriceA);
-
-                    String textPriceB = etPriceB.getText().toString();
-                    float valuePriceB = Float.parseFloat(textPriceB);
-
-                    String textNumberA = etNumberA.getText().toString();
-                    float valueNumberA = Float.parseFloat(textNumberA);
-
-                    String textNumberB = etNumberB.getText().toString();
-                    float valueNumberB = Float.parseFloat(textNumberB);
-
-                    if (valueNumberA == 0 || valueNumberB == 0) {
-                        throw new ArithmeticException();
-                    }
-
-                    float resultA = (valuePriceA / valueNumberA);
-                    float resultB = (valuePriceB / valueNumberB);
-
-                    //Сравнение товаров с последующим изменением заднего фона
-                    if (resultA < resultB) {
-                        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
-                        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
-                    } else if (resultA > resultB) {
-                        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
-                        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
-
-                    } else if (resultA == resultB) {
-                        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
-                        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
-                    } else {
-                        vBackgroundA.setBackgroundResource(R.color.white);
-                        vBackgroundB.setBackgroundResource(R.color.white);
-                    }
-
-                } catch (NumberFormatException exception) {
-                    showError("Введите корректные значения!");
-                } catch (ArithmeticException exception) {
-                    showError("Количество не должно равняться нулю!");
+                } else if (!etPriceB.getText().toString().equals("") && !etNumberB.getText().toString().equals("")) {
+                    textPriceB = etPriceB.getText().toString();
+                    valuePriceB = Float.parseFloat(textPriceB);
+                    textNumberB = etNumberB.getText().toString();
+                    valueNumberB = Float.parseFloat(textNumberB);
+                    tvCalculateB.setText(String.valueOf(valuePriceB / valueNumberB));
                 }
+            } catch (NullPointerException exception) {
+                showError("Введите корректные значения!");
             }
-        });
-    }
 
-    //функция Калькул'те'() { }
-    public static class Calculate {
-    }
+        }
 
 
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                resultA = (valuePriceA / valueNumberA);
+                resultB = (valuePriceB / valueNumberB);
+                if (mWasEdited) {
+                    return;
+                }
+                if (valueNumberA == 0 || valueNumberB == 0) {
+                    throw new ArithmeticException();
+                } else if (resultA < resultB) {
+                    vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
+                    vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
+                } else if (resultA > resultB) {
+                    vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
+                    vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
 
-    private void showError(String message) {
-        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
-        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
-        Toast toast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
-        toast.show();
+                } else if (resultA == resultB) {
+                    vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
+                    vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
+                } else {
+                    vBackgroundA.setBackgroundResource(R.color.white);
+                    vBackgroundB.setBackgroundResource(R.color.white);
+                }
+
+            } catch (
+                    NumberFormatException exception) {
+                showError("Введите корректные значения!");
+            } catch (
+                    ArithmeticException exception) {
+                showError("Количество не должно равняться нулю!");
+            }
+
+        }
+        K
+        private void showError(String message) {
+            vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
+            vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
+            Toast toast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }

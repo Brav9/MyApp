@@ -69,8 +69,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvQuantityA" />
 
-    <EditText
-        android:id="@+id/etCalculateA"
+    <TextView
+        android:id="@+id/tvCalculateA"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
@@ -156,8 +156,8 @@
         app:layout_constraintStart_toStartOf="@+id/middle"
         app:layout_constraintTop_toBottomOf="@+id/tvQuantityB" />
 
-    <EditText
-        android:id="@+id/etCalculateB"
+    <TextView
+        android:id="@+id/tvCalculateB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
