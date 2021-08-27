@@ -131,12 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        //Добавить отображение результата расчета по каждому товару ниже.
-        //Авторасчет - убрать кнопку "Расчитать". ВМесто этого повесить на поля ввода слушатели^
-        //онТекстЧенд;еЛистенер. При изменении текста ну;но менять переменну.? в которотой [раниться значение]
     }
-
 
     public void Calculate() {
         resultA = valuePriceA / valueNumberA;
@@ -172,5 +167,4 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
         toast.show();
     }
-
 }
