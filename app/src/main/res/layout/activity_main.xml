@@ -39,6 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvGoodA" />
 
     <EditText
+        android:textAlignment="center"
         android:id="@+id/editTextPriceA"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextPriceA" />
 
     <EditText
+        android:textAlignment="center"
         android:id="@+id/etQuantityA"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -76,6 +78,7 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="20dp"
         android:inputType="number"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/vBackgroundA"
         app:layout_constraintEnd_toStartOf="@+id/middle"
 
@@ -126,6 +129,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvGoodB" />
 
     <EditText
+        android:textAlignment="center"
         android:id="@+id/editTextPriceB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -147,6 +151,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextPriceB" />
 
     <EditText
+        android:textAlignment="center"
         android:id="@+id/etQuantityB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -157,6 +162,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvQuantityB" />
 
     <TextView
+        android:textAlignment="center"
         android:id="@+id/tvCalculateB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
