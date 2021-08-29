@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "background - white");
         }
     }
-
     // private void showError(String message) {
     //   vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
     //    vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
