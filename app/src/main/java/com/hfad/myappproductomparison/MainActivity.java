@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etNumberB;
     TextView tvCalculateA;
     TextView tvCalculateB;
+    TextView tvError;
     View vBackgroundA;
     View vBackgroundB;
     float valuePriceA;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         vBackgroundB = findViewById(R.id.vBackgroundB);
         tvCalculateA = findViewById(R.id.tvCalculateA);
         tvCalculateB = findViewById(R.id.tvCalculateB);
+        tvError = findViewById(R.id.tvError);
 
         etPriceA.addTextChangedListener(new TextWatcher() {
             @Override
@@ -56,9 +58,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onTextChanged: PriceA");
                 } catch (NullPointerException exception) {
                     valuePriceA = 0;
+                    showError();
                 } catch (NumberFormatException exception) {
                     Log.d(TAG, "onTextChanged: null PriceA");
                     valuePriceA = 0;
+                    showError();
                 }
 
                 calculate();
@@ -83,9 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onTextChanged: PriceB");
                 } catch (NullPointerException exception) {
                     valuePriceB = 0;
+                    showError();
                 } catch (NumberFormatException exception) {
                     Log.d(TAG, "onTextChanged: null PriceB");
                     valuePriceB = 0;
+                    showError();
                 }
                 calculate();
             }
@@ -109,9 +115,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onTextChanged: NumberA");
                 } catch (NullPointerException exception) {
                     valueNumberA = 0;
+                    showError();
                 } catch (NumberFormatException exception) {
                     Log.d(TAG, "onTextChanged: null NumberA");
                     valueNumberA = 0;
+                    showError();
                 }
                 calculate();
             }
@@ -135,9 +143,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onTextChanged: NumberB");
                 } catch (NullPointerException exception) {
                     valueNumberB = 0;
+                    showError();
                 } catch (NumberFormatException exception) {
                     Log.d(TAG, "onTextChanged: null NumberB");
                     valueNumberB = 0;
+                    showError();
                 }
                 calculate();
             }
@@ -199,5 +209,11 @@ public class MainActivity extends AppCompatActivity {
             vBackgroundB.setBackgroundResource(R.color.white);
             Log.d(TAG, "background - white");
         }
+    }
+
+    private void showError() {
+        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
+        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
+        tvError.setText("Введите корректные значения!");
     }
 }
