@@ -54,19 +54,16 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 try {
-                    valuePriceA = Float.parseFloat(etPriceA.getText().toString());
                     Log.d(TAG, "onTextChanged: PriceA");
+                    valuePriceA = Float.parseFloat(etPriceA.getText().toString());
+                    calculate();
                 } catch (NullPointerException exception) {
-                   // valuePriceA = 0;
                     Log.d(TAG, "onTextChanged: Null PriceA");
                     showError();
                 } catch (NumberFormatException exception) {
                     Log.d(TAG, "onTextChanged: Не удалось распарсить PriceA");
-                    valuePriceA = 0;
                     showError();
                 }
-
-                calculate();
             }
 
             @Override
@@ -77,153 +74,122 @@ public class MainActivity extends AppCompatActivity {
         etPriceB.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
 
-                    valuePriceB = Float.parseFloat(etPriceB.getText().toString());
+                try {
                     Log.d(TAG, "onTextChanged: PriceB");
+                    valuePriceB = Float.parseFloat(etPriceB.getText().toString());
+                    calculate();
                 } catch (NullPointerException exception) {
-                    //valuePriceB = 0;
                     Log.d(TAG, "onTextChanged: Null PriceB");
                     showError();
                 } catch (NumberFormatException exception) {
                     Log.d(TAG, "onTextChanged: Не удалось распарсить PriceB");
-                    valuePriceB = 0;
                     showError();
                 }
-                calculate();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
         etNumberA.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 try {
-                    valueNumberA = Float.parseFloat(etNumberA.getText().toString());
                     Log.d(TAG, "onTextChanged: NumberA");
+                    valueNumberA = Float.parseFloat(etNumberA.getText().toString());
+                    calculate();
                 } catch (NullPointerException exception) {
-                   // valueNumberA = 0;
                     Log.d(TAG, "onTextChanged: Null NumberA");
                     showError();
                 } catch (NumberFormatException exception) {
                     Log.d(TAG, "onTextChanged: Не удалось распарсить NumberA");
-                    valueNumberA = 0;
                     showError();
                 }
-                calculate();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
         etNumberB.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 try {
-                    valueNumberB = Float.parseFloat(etNumberB.getText().toString());
                     Log.d(TAG, "onTextChanged: NumberB");
+                    valueNumberB = Float.parseFloat(etNumberB.getText().toString());
+                    calculate();
                 } catch (NullPointerException exception) {
-                   // valueNumberB = 0;
                     Log.d(TAG, "onTextChanged: Null NumberB");
                     showError();
                 } catch (NumberFormatException exception) {
                     Log.d(TAG, "onTextChanged: Не удалось распарсить NumberB");
-                    valueNumberB = 0;
                     showError();
                 }
-                calculate();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }
 
-    public void calculate() {
+    private void calculate() {
 
-        if (((valuePriceA > 0 && valueNumberA > 0) && (valuePriceB > 0 && valueNumberB > 0))
-                && ((etPriceA != null && etPriceB != null) && (etNumberA != null && etNumberB != null))) {
+        if (valueNumberA != 0 || valueNumberB != 0) {
             resultA = valuePriceA / valueNumberA;
-            Log.d(TAG, "calculate: valuePriceA / valueNumberA");
-            tvCalculateA.setText(String.valueOf(resultA));
-            Log.d(TAG, "calculate: resultA");
             resultB = valuePriceB / valueNumberB;
-            Log.d(TAG, "calculate: valuePriceB / valueNumberB");
-            tvCalculateB.setText(String.valueOf(resultB));
-            Log.d(TAG, "calculate: resultB");
-            tvError.setText(null);
 
+            tvCalculateA.setText(String.valueOf(resultA));
+            tvCalculateB.setText(String.valueOf(resultB));
+
+            tvError.setText(null);
+            tvError.setVisibility(View.GONE);
+            showResult();
         } else {
             resultA = 0;
-            tvCalculateA.setText(String.valueOf(resultA));
             resultB = 0;
+            tvCalculateA.setText(String.valueOf(resultA));
             tvCalculateB.setText(String.valueOf(resultB));
-            Log.d(TAG, "calculate: tvCalculateA && tvCalculateB = 0");
+            showError();
         }
-
-
-        background();
     }
 
-    //} catch (ArithmeticException exception) {
-    //   Log.d(TAG, "calculate: ArithmeticException exception");
-    //   showError("Введите корректные значения!");
-    //}
-
-
-    public void background() {
-        if ((resultA < resultB) && (valueNumberA > 0 && valueNumberB > 0)
-                && (valuePriceA > 0 && valuePriceB > 0)) {
+    private void showResult() {
+        float result = resultA - resultB;
+        if (result == 0) {
+            vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
+            vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
+        } else if (result > 0) {
             vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
             vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
-            Log.d(TAG, "background: gradient background resultA < resultB");
-        } else if ((resultA > resultB) && (valueNumberA != 0 && valueNumberB != 0)
-                && (valuePriceA != 0 && valuePriceB != 0)) {
+        } else if (result < 0) {
             vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
             vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
-
-            Log.d(TAG, "background: gradient background resultA > resultB");
-        } else if ((resultA == resultB) && (valueNumberA != 0 && valueNumberB != 0)
-                && (valuePriceA != 0 && valuePriceB != 0)) {
-            vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
-            vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
-            Log.d(TAG, "background: gradient background resultA == resultB");
-        } else {
-            vBackgroundA.setBackgroundResource(R.color.white);
-            vBackgroundB.setBackgroundResource(R.color.white);
-            Log.d(TAG, "background - white");
         }
     }
 
     private void showError() {
-        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
-        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
+        vBackgroundA.setBackgroundResource(R.color.white);
+        vBackgroundB.setBackgroundResource(R.color.white);
         tvError.setText("Введите корректные значения!");
+        tvError.setVisibility(View.VISIBLE);
         Log.d(TAG, "showError: Введите корректные значения!");
-
     }
 }
