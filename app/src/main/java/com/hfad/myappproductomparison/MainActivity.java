@@ -164,15 +164,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calculate() {
-        //  try {
-           // tvError.postDelayed(new Runnable() {
-           //     public void run() {
-           //         tvError.setVisibility(View.INVISIBLE);
-           //         Log.d(TAG, "run: INVISIBLE");
-           //     }
-         //   }, 3000);
-
-
 
         if (((valuePriceA > 0 && valueNumberA > 0) && (valuePriceB > 0 && valueNumberB > 0))
                 && ((etPriceA != null && etPriceB != null) && (etNumberA != null && etNumberB != null))) {
