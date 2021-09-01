@@ -57,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
                     valuePriceA = Float.parseFloat(etPriceA.getText().toString());
                     Log.d(TAG, "onTextChanged: PriceA");
                 } catch (NullPointerException exception) {
-                    valuePriceA = 0;
+                   // valuePriceA = 0;
+                    Log.d(TAG, "onTextChanged: Null PriceA");
                     showError();
                 } catch (NumberFormatException exception) {
-                    Log.d(TAG, "onTextChanged: null PriceA");
+                    Log.d(TAG, "onTextChanged: Не удалось распарсить PriceA");
                     valuePriceA = 0;
                     showError();
                 }
@@ -86,10 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     valuePriceB = Float.parseFloat(etPriceB.getText().toString());
                     Log.d(TAG, "onTextChanged: PriceB");
                 } catch (NullPointerException exception) {
-                    valuePriceB = 0;
+                    //valuePriceB = 0;
+                    Log.d(TAG, "onTextChanged: Null PriceB");
                     showError();
                 } catch (NumberFormatException exception) {
-                    Log.d(TAG, "onTextChanged: null PriceB");
+                    Log.d(TAG, "onTextChanged: Не удалось распарсить PriceB");
                     valuePriceB = 0;
                     showError();
                 }
@@ -114,10 +116,11 @@ public class MainActivity extends AppCompatActivity {
                     valueNumberA = Float.parseFloat(etNumberA.getText().toString());
                     Log.d(TAG, "onTextChanged: NumberA");
                 } catch (NullPointerException exception) {
-                    valueNumberA = 0;
+                   // valueNumberA = 0;
+                    Log.d(TAG, "onTextChanged: Null NumberA");
                     showError();
                 } catch (NumberFormatException exception) {
-                    Log.d(TAG, "onTextChanged: null NumberA");
+                    Log.d(TAG, "onTextChanged: Не удалось распарсить NumberA");
                     valueNumberA = 0;
                     showError();
                 }
@@ -142,10 +145,11 @@ public class MainActivity extends AppCompatActivity {
                     valueNumberB = Float.parseFloat(etNumberB.getText().toString());
                     Log.d(TAG, "onTextChanged: NumberB");
                 } catch (NullPointerException exception) {
-                    valueNumberB = 0;
+                   // valueNumberB = 0;
+                    Log.d(TAG, "onTextChanged: Null NumberB");
                     showError();
                 } catch (NumberFormatException exception) {
-                    Log.d(TAG, "onTextChanged: null NumberB");
+                    Log.d(TAG, "onTextChanged: Не удалось распарсить NumberB");
                     valueNumberB = 0;
                     showError();
                 }
@@ -161,6 +165,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void calculate() {
         //  try {
+           // tvError.postDelayed(new Runnable() {
+           //     public void run() {
+           //         tvError.setVisibility(View.INVISIBLE);
+           //         Log.d(TAG, "run: INVISIBLE");
+           //     }
+         //   }, 3000);
+
+
+
         if (((valuePriceA > 0 && valueNumberA > 0) && (valuePriceB > 0 && valueNumberB > 0))
                 && ((etPriceA != null && etPriceB != null) && (etNumberA != null && etNumberB != null))) {
             resultA = valuePriceA / valueNumberA;
@@ -171,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "calculate: valuePriceB / valueNumberB");
             tvCalculateB.setText(String.valueOf(resultB));
             Log.d(TAG, "calculate: resultB");
+            tvError.setText(null);
+
         } else {
             resultA = 0;
             tvCalculateA.setText(String.valueOf(resultA));
@@ -178,13 +193,16 @@ public class MainActivity extends AppCompatActivity {
             tvCalculateB.setText(String.valueOf(resultB));
             Log.d(TAG, "calculate: tvCalculateA && tvCalculateB = 0");
         }
-        background();
 
-        //} catch (ArithmeticException exception) {
-        //   Log.d(TAG, "calculate: ArithmeticException exception");
-        //   showError("Введите корректные значения!");
-        //}
+
+        background();
     }
+
+    //} catch (ArithmeticException exception) {
+    //   Log.d(TAG, "calculate: ArithmeticException exception");
+    //   showError("Введите корректные значения!");
+    //}
+
 
     public void background() {
         if ((resultA < resultB) && (valueNumberA > 0 && valueNumberB > 0)
@@ -202,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
                 && (valuePriceA != 0 && valuePriceB != 0)) {
             vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
             vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
-
             Log.d(TAG, "background: gradient background resultA == resultB");
         } else {
             vBackgroundA.setBackgroundResource(R.color.white);
@@ -215,5 +232,7 @@ public class MainActivity extends AppCompatActivity {
         vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
         vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
         tvError.setText("Введите корректные значения!");
+        Log.d(TAG, "showError: Введите корректные значения!");
+
     }
 }
