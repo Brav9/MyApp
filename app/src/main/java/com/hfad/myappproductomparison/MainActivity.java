@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void calculate() {
 
-
         if ((valueNumberA != 0 && valueNumberB != 0) && (valuePriceA != 0 && valuePriceB != 0)) {
             resultA = valuePriceA / valueNumberA;
             resultB = valuePriceB / valueNumberB;
