@@ -10,11 +10,11 @@
         android:id="@+id/vBackgroundA"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:background="@drawable/gradient_background_green_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/middle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@drawable/gradient_background_green_white" />
 
     <TextView
         android:id="@+id/tvGoodA"
@@ -31,7 +31,7 @@
         android:id="@+id/tvPriceA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="20dp"
         android:text="@string/text_view_tree"
         android:textColor="#616161"
         app:layout_constraintEnd_toStartOf="@+id/middle"
@@ -39,6 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvGoodA" />
 
     <EditText
+        android:textAlignment="center"
         android:id="@+id/editTextPriceA"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,15 +61,30 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextPriceA" />
 
     <EditText
+        android:textAlignment="center"
         android:id="@+id/etQuantityA"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="@id/middle"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvQuantityA" />
+
+    <TextView
+        android:id="@+id/tvCalculateA"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="20dp"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/vBackgroundA"
+        app:layout_constraintEnd_toStartOf="@+id/middle"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCalculate"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/middle"
@@ -83,11 +99,13 @@
         android:id="@+id/vBackgroundB"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:background="@drawable/gradient_background_white_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/middle"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:background="@drawable/gradient_background_white_red" />
 
     <TextView
         android:id="@+id/tvGoodB"
@@ -104,13 +122,14 @@
         android:id="@+id/tvPriceB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48sp"
+        android:layout_marginTop="20dp"
         android:text="@string/text_view_tree"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/middle"
         app:layout_constraintTop_toBottomOf="@+id/tvGoodB" />
 
     <EditText
+        android:textAlignment="center"
         android:id="@+id/editTextPriceB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -132,6 +151,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextPriceB" />
 
     <EditText
+        android:textAlignment="center"
         android:id="@+id/etQuantityB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -141,15 +161,42 @@
         app:layout_constraintStart_toStartOf="@+id/middle"
         app:layout_constraintTop_toBottomOf="@+id/tvQuantityB" />
 
-    <Button
-        android:id="@+id/btnCalculate"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/btm_calculate"
+    <TextView
+        android:id="@+id/tvCalculateB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="20dp"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/vBackgroundB"
+
+        app:layout_constraintStart_toEndOf="@+id/vBackgroundA"
+        app:layout_constraintTop_toBottomOf="@+id/tvCalculate"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvCalculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/text_view_five"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etQuantityA" />
+
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCalculate"
+        app:layout_constraintVertical_bias="0.133" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

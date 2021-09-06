@@ -1,91 +1,198 @@
 package com.hfad.myappproductomparison;
 
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "VAS9_TAG";
 
-
-
-    EditText etPriceA; // переименовать в етПрайсА
+    EditText etPriceA;
     EditText etPriceB;
     EditText etNumberA;
     EditText etNumberB;
-    Button btnCalculate;
+    TextView tvCalculateA;
+    TextView tvCalculateB;
+    TextView tvError;
     View vBackgroundA;
     View vBackgroundB;
-
+    float valuePriceA;
+    float valuePriceB;
+    float valueNumberA;
+    float valueNumberB;
+    float resultA;
+    float resultB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate: Start!");
 
         etPriceA = findViewById(R.id.editTextPriceA);
         etPriceB = findViewById(R.id.editTextPriceB);
         etNumberA = findViewById(R.id.etQuantityA);
         etNumberB = findViewById(R.id.etQuantityB);
-        btnCalculate = findViewById(R.id.btnCalculate);
         vBackgroundA = findViewById(R.id.vBackgroundA);
         vBackgroundB = findViewById(R.id.vBackgroundB);
+        tvCalculateA = findViewById(R.id.tvCalculateA);
+        tvCalculateB = findViewById(R.id.tvCalculateB);
+        tvError = findViewById(R.id.tvError);
 
-        btnCalculate.setOnClickListener(new View.OnClickListener() {
+        etPriceA.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 try {
-                    String textPriceA = etPriceA.getText().toString();
-                    float valuePriceA = Float.parseFloat(textPriceA);
-
-                    String textPriceB = etPriceB.getText().toString();
-                    float valuePriceB = Float.parseFloat(textPriceB);
-
-                    String textNumberA = etNumberA.getText().toString();
-                    float valueNumberA = Float.parseFloat(textNumberA);
-
-                    String textNumberB = etNumberB.getText().toString();
-                    float valueNumberB = Float.parseFloat(textNumberB);
-
-                    float resultA = (valuePriceA / valueNumberA);
-                    float resultB = (valuePriceB / valueNumberB);
-
-                    //Сравнение товаров с последующим изменением заднего фона
-                    if (resultA < resultB && (valueNumberA != 0 && valueNumberB != 0)) {
-                        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
-                        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
-                    } else if (resultA > resultB && (valueNumberA != 0 && valueNumberB != 0)) {
-                        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
-                        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
-                    } else if (valueNumberA == 0 || valueNumberB == 0) {
-                        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
-                        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
-                    } else if (resultA == resultB && (valueNumberA != 0 && valueNumberB != 0)) {
-                        vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
-                        vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
-                    } else {
-                        vBackgroundA.setBackgroundResource(R.color.white);
-                        vBackgroundB.setBackgroundResource(R.color.white);
-                    }
-
+                    Log.d(TAG, "onTextChanged: PriceA");
+                    valuePriceA = Float.parseFloat(etPriceA.getText().toString());
+                    calculate();
+                } catch (NullPointerException exception) {
+                    Log.d(TAG, "onTextChanged: Null PriceA");
+                    showError();
                 } catch (NumberFormatException exception) {
-                    //TODO показать toast с текстом "Введите корректные значения"
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Введите корректные значения!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } catch (ArithmeticException exception) {
-                    //TODO показать toast с текстом "Количество не должно равняться нулю"
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Количество не должно равняться нулю!", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Log.d(TAG, "onTextChanged: Не удалось распарсить PriceA");
+                    showError();
                 }
             }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
+
+        etPriceB.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try {
+                    Log.d(TAG, "onTextChanged: PriceB");
+                    valuePriceB = Float.parseFloat(etPriceB.getText().toString());
+                    calculate();
+                } catch (NullPointerException exception) {
+                    Log.d(TAG, "onTextChanged: Null PriceB");
+                    showError();
+                } catch (NumberFormatException exception) {
+                    Log.d(TAG, "onTextChanged: Не удалось распарсить PriceB");
+                    showError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        etNumberA.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try {
+                    Log.d(TAG, "onTextChanged: NumberA");
+                    valueNumberA = Float.parseFloat(etNumberA.getText().toString());
+                    calculate();
+                } catch (NullPointerException exception) {
+                    Log.d(TAG, "onTextChanged: Null NumberA");
+                    showError();
+                } catch (NumberFormatException exception) {
+                    Log.d(TAG, "onTextChanged: Не удалось распарсить NumberA");
+                    showError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        etNumberB.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try {
+                    Log.d(TAG, "onTextChanged: NumberB");
+                    valueNumberB = Float.parseFloat(etNumberB.getText().toString());
+                    calculate();
+                } catch (NullPointerException exception) {
+                    Log.d(TAG, "onTextChanged: Null NumberB");
+                    showError();
+                } catch (NumberFormatException exception) {
+                    Log.d(TAG, "onTextChanged: Не удалось распарсить NumberB");
+                    showError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+    private void calculate() {
+
+        if ((valueNumberA != 0 && valueNumberB != 0) && (valuePriceA != 0 && valuePriceB != 0)) {
+            resultA = valuePriceA / valueNumberA;
+            resultB = valuePriceB / valueNumberB;
+
+            tvCalculateA.setText(String.valueOf(resultA));
+            tvCalculateB.setText(String.valueOf(resultB));
+
+            tvError.setText(null);
+            tvError.setVisibility(View.GONE);
+            showResult();
+
+        } else {
+            resultA = 0;
+            resultB = 0;
+            tvCalculateA.setText(String.valueOf(resultA));
+            tvCalculateB.setText(String.valueOf(resultB));
+            if (valueNumberA == 0 || valueNumberB == 0) {
+                showError();
+            }
+        }
+    }
+
+    private void showResult() {
+        float result = resultA - resultB;
+        if (result == 0) {
+            vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
+            vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
+        } else if (result > 0) {
+            vBackgroundA.setBackgroundResource(R.drawable.gradient_background_green_white);
+            vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_red);
+        } else if (result < 0) {
+            vBackgroundA.setBackgroundResource(R.drawable.gradient_background_red_white);
+            vBackgroundB.setBackgroundResource(R.drawable.gradient_background_white_green);
+        }
+    }
+
+    private void showError() {
+        vBackgroundA.setBackgroundResource(R.color.white);
+        vBackgroundB.setBackgroundResource(R.color.white);
+        tvError.setText("Введите корректные значения!");
+        tvError.setVisibility(View.VISIBLE);
+        Log.d(TAG, "showError: Введите корректные значения!");
     }
 }
