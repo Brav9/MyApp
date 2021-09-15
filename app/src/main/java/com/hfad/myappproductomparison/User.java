@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 public class User {
-
     TextView tvCalculateA;
     TextView tvCalculateB;
     TextView tvError;
