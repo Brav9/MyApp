@@ -10,9 +10,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements UserPresenter {
+public class MainActivity extends AppCompatActivity implements IContract.IView {
     private static final String TAG = "VAS9_TAG";
 
+    IContract.IPresenter presenter;
     EditText etPriceA;
     EditText etPriceB;
     EditText etNumberA;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements UserPresenter {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Start!");
 
+        presenter = new Presenter(this);
+
         etPriceA = findViewById(R.id.editTextPriceA);
         etPriceB = findViewById(R.id.editTextPriceB);
         etNumberA = findViewById(R.id.etQuantityA);
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements UserPresenter {
                 try {
                     Log.d(TAG, "onTextChanged: PriceA");
                     valuePriceA = Float.parseFloat(etPriceA.getText().toString());
-                    calculate();
+                    presenter.calculate();
                 } catch (NullPointerException exception) {
                     Log.d(TAG, "onTextChanged: Null PriceA");
                     showError();
@@ -148,5 +151,11 @@ public class MainActivity extends AppCompatActivity implements UserPresenter {
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    @Override
+    public void showInfo() {
+        tvCalculateA.setText();
+        tvCalculateB.setText();
     }
 }
